@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Bookmarks - Add bookmarks{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Add Bookmark</h1>
+</div>
+<div class="col-md-8">
+    {{ wtf.quick_form(form) }}
+    <br>
+</div>
+{% endblock %}
