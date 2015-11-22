@@ -2,8 +2,25 @@
 
 {% block title %}Bookmarks{% endblock %}
 
+{% macro icon(site, title="") %}
+    <img src="{{ url_for('static', filename='images/%s.jpg' % site) }}" alt="{{ title }}" class="img-icon"
+         style="width:150px;height:150px">
+{% endmacro %}
+
 {% block page_content %}
+
+
 <div class="page-header">
-    <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}! {% endif %}</h1>
+    <h3>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}! {% endif %} your bookmarks are</h3>
+</div>
+<div class="row">
+    {% for bookmark in bookmarks %}
+        <div class="col-md-4">
+            <a href="{{ bookmark. url }}" target="_blank" class="thumbnail">
+                <p>{{  bookmark.description }}</p>
+                {{ icon(bookmark.image_url) }}
+            </a>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
