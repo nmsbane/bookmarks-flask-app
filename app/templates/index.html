@@ -3,8 +3,9 @@
 {% block title %}Bookmarks{% endblock %}
 
 {% macro icon(site, title="") %}
-    <img src="{{ url_for('static', filename='images/%s.jpg' % site) }}" alt="{{ title }}" class="img-icon"
-         style="width:150px;height:150px">
+    <div class="thumbnail">
+        <img src="{{ site }}" alt="{{ title }}" style="width: 350px;">
+    </div>
 {% endmacro %}
 
 {% block page_content %}
@@ -17,8 +18,8 @@
     {% for bookmark in bookmarks %}
         <div class="col-md-4">
             <a href="{{ bookmark. url }}" target="_blank" class="thumbnail">
-                <p>{{  bookmark.description }}</p>
                 {{ icon(bookmark.image_url) }}
+                <p>{{  bookmark.description }}</p>
             </a>
         </div>
     {% endfor %}
