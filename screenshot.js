@@ -1,19 +1,20 @@
-var page = new WebPage(),
-    address, outfile, width, height, clip_height;
+var urlToImage = require('url-to-image');
+var url = process.argv[2]
+var outfile = process.argv[3];
 
-address = phantom.args[0];
-outfile = phantom.args[1];
-width = 1024;
-clip_height = height = 800;
+console.log(url);
+console.log(outfile);
 
-page.viewportSize = { width: width, height: height };
-page.clipRect = { width: width, height: clip_height };
+var options = {
+    width: 1200,
+    height: 800,
+    // Give a short time to load additional resources
+    requestTimeout: 100,
+    clip_height: 800,
+    verbose: false,
+    phantomArguments: '--ignore-ssl-errors=true'
+}
 
-page.open(address, function (status) {
-  if (status !== 'success') {
-    phantom.exit(1);
-  } else {
-    page.render(outfile);
-    phantom.exit();
-  }
-});
+urlToImage(url, outfile, options)
+  
+  

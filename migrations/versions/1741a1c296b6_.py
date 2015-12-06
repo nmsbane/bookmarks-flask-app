@@ -19,7 +19,7 @@ def upgrade():
     op.create_table('bookmarks',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(length=256), nullable=False),
-    sa.Column('image_url', sa.String(length=256), nullable=False),
+    sa.Column('image_url', sa.String(length=256)),
     sa.Column('description', sa.String(length=128), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),

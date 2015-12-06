@@ -16,12 +16,14 @@
 </div>
 <div class="row">
     {% for bookmark in bookmarks %}
-        <div class="col-md-4">
-            <a href="{{ bookmark. url }}" target="_blank" class="thumbnail">
-                {{ icon(bookmark.image_url) }}
-                <p>{{  bookmark.description }}</p>
-            </a>
-        </div>
+        {% if bookmark.image_url %}
+            <div class="col-md-4">
+                <a href="{{ bookmark. url }}" target="_blank" class="thumbnail">
+                    {{ icon(bookmark.image_url) }}
+                    <p>{{  bookmark.description }}</p>
+                </a>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

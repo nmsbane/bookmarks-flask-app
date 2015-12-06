@@ -1,9 +1,7 @@
-import uuid
-import boto
 from flask import redirect, url_for, render_template, flash
 from flask.ext.login import login_required, current_user
 from . import main
-from .. import db
+from app import db
 from .forms import Bookmarks
 from ..models import BookMarks
 import os
@@ -25,6 +23,7 @@ def bookmarks():
 @main.route('/addbookmarks', methods=['GET', 'POST'])
 @login_required
 def add_bookmarks():
+    from extensions import fetch_image
     '''
     This function adds the bookmarks to the database, and it will also check whether the url being added
     is already in users list of urls
@@ -41,9 +40,10 @@ def add_bookmarks():
                 return redirect(url_for('main.bookmarks'))
         bookmark_object = BookMarks()
         bookmark_object.description = form.comment.data
-        if not bookmark_object.fetch_image(url):
-            render_template('error.html')
+        bookmark_object.url = url
         bookmark_object.user = active_user
-        db.session.add(bookmark_object)
+        fetch_image.delay(bookmark_object, url, active_user)
+        flash('Your added bookmark is being processed and uploaded')
+        db.session.commit()
         return redirect(url_for('main.bookmarks'))
     return render_template('add_bookmarks.html', form=form)
